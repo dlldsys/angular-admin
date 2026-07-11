@@ -15,7 +15,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
-import { NzImageService } from 'ng-zorro-antd/image';
+import { NzImageModule, NzImageService } from 'ng-zorro-antd/image';
 import { Observable, of, Subscription } from 'rxjs';
 
 import * as XLSX from 'xlsx';
@@ -47,7 +47,7 @@ interface UploadedFile {
     CommonModule, FormsModule,
     NzTabsModule, NzTableModule, NzCardModule, NzButtonModule, NzInputModule,
     NzIconModule, NzUploadModule, NzProgressModule, NzTagModule, NzEmptyModule,
-    NzDividerModule, NzToolTipModule
+    NzDividerModule, NzToolTipModule, NzImageModule
   ],
   template: `
     <div class="page-container">
