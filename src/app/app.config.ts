@@ -7,6 +7,7 @@ import { provideNzIcons } from 'ng-zorro-antd/icon';
 import { IconDefinition } from '@ant-design/icons-angular';
 import * as AllIcons from '@ant-design/icons-angular/icons';
 import { provideEchartsCore } from 'ngx-echarts';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { routes } from '../app.routes';
 import { authInterceptor } from '../core/interceptors/auth.interceptor';
 import { errorInterceptor } from '../core/interceptors/error.interceptor';
@@ -22,6 +23,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([authInterceptor, errorInterceptor])),
     provideNzI18n(zh_CN),
     provideNzIcons(icons),
-    provideEchartsCore({ echarts: () => import('echarts') })
+    provideEchartsCore({ echarts: () => import('echarts') }),
+    NzModalService
   ]
 };

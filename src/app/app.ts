@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +7,4 @@ import { NzModalService } from 'ng-zorro-antd/modal';
   imports: [RouterOutlet],
   template: `<router-outlet />`
 })
-export class AppComponent {
-  constructor(
-    private message: NzMessageService,
-    private modal: NzModalService
-  ) {}
-}
+export class AppComponent {}
