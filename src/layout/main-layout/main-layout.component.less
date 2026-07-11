@@ -1,0 +1,126 @@
+.app-layout {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app-sider {
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.08);
+  z-index: 10;
+}
+
+.logo {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 20px;
+  overflow: hidden;
+  white-space: nowrap;
+  .logo-icon { font-size: 24px; }
+  .logo-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1890ff;
+  }
+}
+
+.app-menu {
+  border-right: none;
+}
+
+.app-main-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  z-index: 9;
+  height: 64px;
+  flex-shrink: 0;
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .trigger-btn {
+    font-size: 18px;
+  }
+
+  .breadcrumb {
+    font-size: 14px;
+  }
+
+  .global-search {
+    width: 200px;
+  }
+
+  .header-user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 0 8px;
+    border-radius: 4px;
+    transition: background 0.2s;
+    &:hover { background: rgba(0, 0, 0, 0.04); }
+    .user-name { font-size: 14px; }
+  }
+}
+
+.app-content {
+  flex: 1;
+  overflow: auto;
+  background: #f0f2f5;
+  position: relative;
+}
+
+.content-inner {
+  padding: 16px;
+  min-height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* 水印 */
+.watermark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.08;
+  background-repeat: repeat;
+}
+
+/* 移动端 */
+@media (max-width: 768px) {
+  .app-header {
+    padding: 0 8px;
+    .global-search { display: none; }
+  }
+  .content-inner { padding: 8px; }
+}
+
+/* 暗黑主题 */
+:global(.dark) {
+  .app-header { background: #141414; }
+  .app-content { background: #000; }
+}

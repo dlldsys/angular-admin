@@ -1,0 +1,126 @@
+<nz-layout class="app-layout">
+  <!-- 侧边栏（PC端） -->
+  @if (!isMobile()) {
+    <nz-sider [nzWidth]="230" [nzCollapsedWidth]="64" [nzCollapsed]="isCollapsed()"
+      [nzTrigger]="null" class="app-sider">
+      <div class="logo">
+        <span class="logo-icon">⚙️</span>
+        @if (!isCollapsed()) { <span class="logo-text">企业管理系统</span> }
+      </div>
+      <ul nz-menu [nzTheme]="themeSvc.theme() === 'dark' ? 'dark' : 'light'" [nzInlineCollapsed]="isCollapsed()"
+        nzMode="inline" class="app-menu">
+        @for (menu of menus(); track menu.path) {
+          @if (menu.children && menu.children.length > 0) {
+            <li nz-submenu [nzTitle]="menu.label" [nzIcon]="menu.icon">
+              @for (child of menu.children; track child.path) {
+                <li nz-menu-item [nzMatchRouter]="true" (click)="onMenuClick(child.path)">
+                  <span nz-icon [nzType]="child.icon"></span>
+                  <span>{{ child.label }}</span>
+                </li>
+              }
+            </li>
+          } @else {
+            <li nz-menu-item [nzMatchRouter]="true" (click)="onMenuClick(menu.path)">
+              <span nz-icon [nzType]="menu.icon"></span>
+              <span>{{ menu.label }}</span>
+            </li>
+          }
+        }
+      </ul>
+    </nz-sider>
+  }
+
+  <!-- 移动端抽屉 -->
+  @if (isMobile()) {
+    <nz-drawer [nzVisible]="drawerVisible()" (nzOnClose)="drawerVisible.set(false)"
+      nzPlacement="left" [nzWidth]="230" nzWrapClassName="mobile-drawer">
+      <div class="logo"><span class="logo-icon">⚙️</span><span class="logo-text">企业管理系统</span></div>
+      <ul nz-menu nzTheme="light" nzMode="inline" class="app-menu">
+        @for (menu of menus(); track menu.path) {
+          @if (menu.children && menu.children.length > 0) {
+            <li nz-submenu [nzTitle]="menu.label" [nzIcon]="menu.icon">
+              @for (child of menu.children; track child.path) {
+                <li nz-menu-item (click)="onMenuClick(child.path)">
+                  <span nz-icon [nzType]="child.icon"></span>
+                  <span>{{ child.label }}</span>
+                </li>
+              }
+            </li>
+          } @else {
+            <li nz-menu-item (click)="onMenuClick(menu.path)">
+              <span nz-icon [nzType]="menu.icon"></span>
+              <span>{{ menu.label }}</span>
+            </li>
+          }
+        }
+      </ul>
+    </nz-drawer>
+  }
+
+  <nz-layout class="app-main-layout">
+    <!-- 顶部导航 -->
+    <nz-header class="app-header">
+      <div class="header-left">
+        <button nz-button nzType="text" (click)="toggleSidebar()" class="trigger-btn">
+          <span nz-icon [nzType]="isCollapsed() ? 'menu-unfold' : 'menu-fold'"></span>
+        </button>
+        <!-- 面包屑 -->
+        <nz-breadcrumb class="breadcrumb hide-on-mobile">
+          @for (crumb of breadcrumbs(); track crumb.path) {
+            <nz-breadcrumb-item>{{ crumb.label }}</nz-breadcrumb-item>
+          }
+        </nz-breadcrumb>
+      </div>
+
+      <div class="header-right">
+        <!-- 全局搜索 -->
+        <nz-input-group [nzSuffix]="suffixIcon" class="global-search hide-on-mobile">
+          <input type="text" nz-input placeholder="搜索菜单..." [(ngModel)]="searchValue"
+            (keyup.enter)="onSearch()" />
+        </nz-input-group>
+        <ng-template #suffixIcon>
+          <span nz-icon nzType="search" (click)="onSearch()" style="cursor:pointer"></span>
+        </ng-template>
+
+        <!-- 水印开关 -->
+        <button nz-button nzType="text" (click)="toggleWatermark()"
+          nz-tooltip="{{ watermarkVisible() ? '关闭水印' : '开启水印' }}">
+          <span nz-icon [nzType]="watermarkVisible() ? 'lock' : 'unlock'"></span>
+        </button>
+
+        <!-- 主题切换 -->
+        <button nz-button nzType="text" (click)="toggleTheme()" nz-tooltip="切换主题">
+          <span nz-icon [nzType]="themeSvc.theme() === 'dark' ? 'sun' : 'moon'"></span>
+        </button>
+
+        <!-- 用户下拉 -->
+        <span class="header-user" nz-dropdown [nzDropdownMenu]="userMenu">
+          <nz-avatar [nzSize]="32" nzIcon="user" style="background:#1890ff;cursor:pointer"></nz-avatar>
+          <span class="user-name hide-on-mobile">{{ user()?.name || '用户' }}</span>
+          <span nz-icon nzType="down" class="hide-on-mobile"></span>
+        </span>
+        <nz-dropdown-menu #userMenu="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item (click)="router.navigate(['/settings'])">
+              <span nz-icon nzType="setting"></span>&nbsp;个人设置
+            </li>
+            <li nz-menu-divider></li>
+            <li nz-menu-item (click)="logout()">
+              <span nz-icon nzType="logout"></span>&nbsp;退出登录
+            </li>
+          </ul>
+        </nz-dropdown-menu>
+      </div>
+    </nz-header>
+
+    <!-- 内容区域 -->
+    <nz-content class="app-content" [class.watermark-container]="watermarkVisible()">
+      @if (watermarkVisible()) {
+        <div class="watermark" [style.background-image]="'url(' + getWatermarkData() + ')'"></div>
+      }
+      <div class="content-inner">
+        <router-outlet />
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

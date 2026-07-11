@@ -1,0 +1,39 @@
+{
+  "name": "angular-admin",
+  "version": "1.0.0",
+  "description": "Angular 18 + NG-ZORRO 19 Enterprise Admin Demo",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build --base-href=\"./\"",
+    "watch": "ng build --watch --configuration development"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^19.2.25",
+    "@angular/common": "^19.2.25",
+    "@angular/compiler": "^19.2.25",
+    "@angular/core": "^19.2.25",
+    "@angular/forms": "^19.2.25",
+    "@angular/platform-browser": "^19.2.25",
+    "@angular/platform-browser-dynamic": "^19.2.25",
+    "@angular/router": "^19.2.25",
+    "echarts": "^5.5.0",
+    "file-saver": "^2.0.5",
+    "html2canvas": "^1.4.1",
+    "mammoth": "^1.8.0",
+    "ng-zorro-antd": "^19.3.1",
+    "ngx-echarts": "^18.0.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "xlsx": "^0.18.5",
+    "zone.js": "^0.15.1"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^19.2.27",
+    "@angular/cli": "^19.2.27",
+    "@angular/compiler-cli": "^19.2.25",
+    "@types/file-saver": "^2.0.7",
+    "typescript": "~5.5.2"
+  }
+}

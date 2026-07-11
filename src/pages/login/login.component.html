@@ -1,0 +1,111 @@
+<div class="login-page">
+  <!-- 装饰几何图形 -->
+  <div class="bg-shape shape-1"></div>
+  <div class="bg-shape shape-2"></div>
+  <div class="bg-shape shape-3"></div>
+
+  <div class="login-card">
+    <!-- 左侧品牌展示区 -->
+    <div class="brand-side">
+      <div class="brand-content">
+        <div class="brand-logo">
+          <span class="logo-icon">⚙️</span>
+        </div>
+        <h1 class="brand-title">企业管理系统</h1>
+        <p class="brand-slogan">高效 · 智能 · 安全</p>
+        <ul class="brand-features">
+          <li><span nz-icon nzType="check-circle"></span> 全面的数据可视化分析</li>
+          <li><span nz-icon nzType="check-circle"></span> 灵活的权限管理体系</li>
+          <li><span nz-icon nzType="check-circle"></span> 高效的业务流程管理</li>
+          <li><span nz-icon nzType="check-circle"></span> 安全可靠的数据保障</li>
+        </ul>
+      </div>
+      <div class="brand-footer">
+        <p>© 2026 企业管理系统 · 版权所有</p>
+      </div>
+    </div>
+
+    <!-- 右侧登录表单 -->
+    <div class="form-side">
+      <div class="form-header">
+        <h2>欢迎登录</h2>
+        <p>请输入您的账号信息</p>
+      </div>
+
+      <form nz-form [formGroup]="form" (ngSubmit)="submit()" nzLayout="vertical">
+        <nz-form-item>
+          <nz-form-label nzRequired>用户名</nz-form-label>
+          <nz-form-control nzErrorTip="请输入用户名">
+            <nz-input-group nzPrefixIcon="user">
+              <input type="text" nz-input formControlName="username" placeholder="请输入用户名" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label nzRequired>密码</nz-form-label>
+          <nz-form-control nzErrorTip="请输入至少6位密码">
+            <nz-input-group [nzPrefix]="pwdPrefix" [nzSuffix]="pwdSuffix">
+              <ng-template #pwdPrefix>
+                <span nz-icon nzType="lock"></span>
+              </ng-template>
+              <input
+                [type]="passwordVisible() ? 'text' : 'password'"
+                nz-input
+                formControlName="password"
+                placeholder="请输入密码"
+              />
+            </nz-input-group>
+            <ng-template #pwdSuffix>
+              <span
+                nz-icon
+                [nzType]="passwordVisible() ? 'eye-invisible' : 'eye'"
+                (click)="togglePasswordVisible()"
+                class="pwd-toggle"
+              ></span>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label nzRequired>验证码</nz-form-label>
+          <nz-form-control nzErrorTip="请输入验证码">
+            <div class="captcha-row">
+              <nz-input-group nzPrefixIcon="safety" class="captcha-input">
+                <input type="text" nz-input formControlName="captcha" placeholder="请输入验证码" maxlength="4" />
+              </nz-input-group>
+              <div class="captcha-box" (click)="refreshCaptcha()" title="点击刷新验证码">
+                {{ captcha() }}
+              </div>
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <label nz-checkbox formControlName="remember">记住密码</label>
+        </nz-form-item>
+
+        <nz-form-item>
+          <button nz-button nzType="primary" type="submit" [nzLoading]="loading()" block class="login-btn">
+            登 录
+          </button>
+        </nz-form-item>
+      </form>
+
+      <nz-divider nzPlain>
+        <span class="divider-text">默认账号</span>
+      </nz-divider>
+
+      <div class="account-hint">
+        <div class="hint-card admin">
+          <div class="hint-role"><span nz-icon nzType="crown"></span> 管理员</div>
+          <div class="hint-cred">admin / 123456</div>
+        </div>
+        <div class="hint-card employee">
+          <div class="hint-role"><span nz-icon nzType="user"></span> 员工</div>
+          <div class="hint-cred">employee / 123456</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

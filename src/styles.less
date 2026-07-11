@@ -1,0 +1,52 @@
+/* NG-ZORRO 全局样式 */
+@import "../node_modules/ng-zorro-antd/ng-zorro-antd.less";
+
+/* 全局样式 */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* 滚动条美化 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* 页面水印 */
+.watermark-container {
+  position: relative;
+}
+
+/* 路由动画 */
+route-anim {
+  display: block;
+}
+
+/* 响应式工具类 */
+@media (max-width: 768px) {
+  .hide-on-mobile { display: none !important; }
+}
+@media (min-width: 769px) {
+  .show-on-mobile { display: none !important; }
+}
+
+/* 通用间距 */
+.mb-16 { margin-bottom: 16px; }
+.mt-16 { margin-top: 16px; }
+.flex { display: flex; }
+.flex-between { display: flex; justify-content: space-between; align-items: center; }
+.text-center { text-align: center; }

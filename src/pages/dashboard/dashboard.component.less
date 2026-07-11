@@ -1,0 +1,157 @@
+:host {
+  display: block;
+}
+
+.dashboard-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
+.dashboard {
+  .stat-row {
+    margin-bottom: 16px;
+  }
+
+  .chart-row {
+    margin-bottom: 16px;
+  }
+}
+
+/* 统计卡片 */
+.stat-card {
+  border-radius: 12px;
+  padding: 20px 24px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  /* 装饰圆 */
+  &::after {
+    content: '';
+    position: absolute;
+    right: -20px;
+    top: -20px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+  }
+
+  .stat-card-inner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .stat-icon-wrap {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    span[nz-icon] {
+      font-size: 28px;
+      color: #fff;
+    }
+  }
+
+  .stat-body {
+    flex: 1;
+  }
+
+  .stat-title {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 4px;
+  }
+
+  .stat-value {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 4px;
+
+    .stat-prefix {
+      font-size: 16px;
+      font-weight: 400;
+      margin-right: 2px;
+    }
+  }
+
+  .stat-trend {
+    font-size: 13px;
+    opacity: 0.9;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    span[nz-icon] {
+      font-size: 12px;
+    }
+
+    &.down {
+      opacity: 0.7;
+    }
+  }
+}
+
+/* 图表卡片 */
+.chart-card {
+  margin-bottom: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+
+  ::ng-deep .ant-card-head-title {
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  ::ng-deep .ant-card-body {
+    padding: 16px;
+  }
+}
+
+.chart-box {
+  height: 320px;
+  width: 100%;
+}
+
+/* 响应式 */
+@media (max-width: 576px) {
+  .chart-box {
+    height: 260px;
+  }
+
+  .stat-card {
+    padding: 16px;
+
+    .stat-icon-wrap {
+      width: 48px;
+      height: 48px;
+
+      span[nz-icon] {
+        font-size: 24px;
+      }
+    }
+
+    .stat-value {
+      font-size: 22px;
+    }
+  }
+}

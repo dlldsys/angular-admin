@@ -1,0 +1,59 @@
+@if (loading()) {
+  <div class="dashboard-loading">
+    <nz-spin nzSize="large" nzTip="数据加载中..."></nz-spin>
+  </div>
+} @else {
+  <div class="dashboard">
+    <!-- 统计卡片 -->
+    <nz-row [nzGutter]="[16, 16]" class="stat-row">
+      @for (card of cards(); track card.title) {
+        <nz-col [nzXs]="24" [nzSm]="12" [nzLg]="6">
+          <div class="stat-card" [style.background]="card.color">
+            <div class="stat-card-inner">
+              <div class="stat-icon-wrap">
+                <span nz-icon [nzType]="card.icon"></span>
+              </div>
+              <div class="stat-body">
+                <div class="stat-title">{{ card.title }}</div>
+                <div class="stat-value">
+                  @if (card.prefix) {
+                    <span class="stat-prefix">{{ card.prefix }}</span>
+                  }
+                  {{ card.value | number }}
+                </div>
+                <div class="stat-trend" [class.down]="isDown(card.trend)">
+                  <span nz-icon [nzType]="isDown(card.trend) ? 'arrow-down' : 'arrow-up'"></span>
+                  {{ card.trend }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </nz-col>
+      }
+    </nz-row>
+
+    <!-- 图表区域 -->
+    <nz-row [nzGutter]="[16, 16]" class="chart-row">
+      <nz-col [nzXs]="24" [nzXl]="12">
+        <nz-card nzTitle="月度收入/支出趋势" class="chart-card">
+          <div echarts [options]="lineOption()!" class="chart-box"></div>
+        </nz-card>
+      </nz-col>
+      <nz-col [nzXs]="24" [nzXl]="12">
+        <nz-card nzTitle="部门业绩对比" class="chart-card">
+          <div echarts [options]="barOption()!" class="chart-box"></div>
+        </nz-card>
+      </nz-col>
+      <nz-col [nzXs]="24" [nzXl]="12">
+        <nz-card nzTitle="业务板块占比" class="chart-card">
+          <div echarts [options]="pieOption()!" class="chart-box"></div>
+        </nz-card>
+      </nz-col>
+      <nz-col [nzXs]="24" [nzXl]="12">
+        <nz-card nzTitle="多维度指标评分" class="chart-card">
+          <div echarts [options]="radarOption()!" class="chart-box"></div>
+        </nz-card>
+      </nz-col>
+    </nz-row>
+  </div>
+}
