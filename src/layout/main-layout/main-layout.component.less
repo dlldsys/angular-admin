@@ -1,13 +1,35 @@
+/* ============================================================
+   Main Layout — Seline 设计系统
+   侧边栏：白色 + 石色右边框（非阴影）
+   顶栏：白色 + 石色底边框（非阴影）
+   内容区：暖石画布 #fafaf9
+   ============================================================ */
+
 .app-layout {
   height: 100vh;
   overflow: hidden;
 }
 
+/* ---------- 侧边栏 ---------- */
 .app-sider {
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.08);
+  border-right: 1px solid var(--color-stone-border);
+  box-shadow: none !important;
   z-index: 10;
+  background: var(--color-pure-white) !important;
+  transition: width 0.2s ease;
 }
 
+/* Sider 内部背景覆盖 */
+:host ::ng-deep .ant-layout-sider {
+  background: var(--color-pure-white) !important;
+}
+
+:host ::ng-deep .ant-layout-sider-children {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- Logo 区 ---------- */
 .logo {
   height: 64px;
   display: flex;
@@ -16,34 +38,52 @@
   padding: 0 20px;
   overflow: hidden;
   white-space: nowrap;
-  .logo-icon { font-size: 24px; }
+  border-bottom: 1px solid var(--color-stone-border);
+  flex-shrink: 0;
+
+  .logo-icon {
+    font-size: 22px;
+    line-height: 1;
+  }
+
   .logo-text {
-    font-size: 16px;
-    font-weight: 600;
-    color: #1890ff;
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--color-ink-black);
+    letter-spacing: -0.017em;
   }
 }
 
+/* ---------- 菜单 ---------- */
 .app-menu {
-  border-right: none;
+  border-right: none !important;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 8px 0;
 }
 
+/* ---------- 主区域 ---------- */
 .app-main-layout {
   display: flex;
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
+  background: var(--color-stone-canvas);
 }
 
+/* ---------- 顶部导航 ---------- */
 .app-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 16px;
-  background: #fff;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  padding: 0 20px;
+  background: var(--color-pure-white);
+  border-bottom: 1px solid var(--color-stone-border);
+  box-shadow: none;
   z-index: 9;
-  height: 64px;
+  height: 56px;
   flex-shrink: 0;
 
   .header-left {
@@ -55,19 +95,45 @@
   .header-right {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
   }
 
   .trigger-btn {
-    font-size: 18px;
+    font-size: 16px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-inputs) !important;
+
+    &:hover {
+      background: var(--color-stone-canvas) !important;
+    }
   }
 
   .breadcrumb {
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .global-search {
-    width: 200px;
+    width: 220px;
+
+    ::ng-deep .ant-input-affix-wrapper {
+      border-radius: var(--radius-buttons) !important;
+      background: var(--color-stone-canvas) !important;
+      border-color: transparent !important;
+      height: 36px;
+
+      &:hover, &:focus, &-focused {
+        background: var(--color-pure-white) !important;
+        border-color: var(--color-cyan-signal) !important;
+      }
+    }
+
+    ::ng-deep .ant-input {
+      background: transparent !important;
+    }
   }
 
   .header-user {
@@ -76,28 +142,38 @@
     gap: 8px;
     cursor: pointer;
     padding: 0 8px;
-    border-radius: 4px;
-    transition: background 0.2s;
-    &:hover { background: rgba(0, 0, 0, 0.04); }
-    .user-name { font-size: 14px; }
+    border-radius: var(--radius-buttons);
+    height: 36px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: var(--color-stone-canvas);
+    }
+
+    .user-name {
+      font-size: 13px;
+      color: var(--color-ink-black);
+      font-weight: 500;
+    }
   }
 }
 
+/* ---------- 内容区域 ---------- */
 .app-content {
   flex: 1;
   overflow: auto;
-  background: #f0f2f5;
+  background: var(--color-stone-canvas);
   position: relative;
 }
 
 .content-inner {
-  padding: 16px;
+  padding: 24px;
   min-height: 100%;
   position: relative;
   z-index: 1;
 }
 
-/* 水印 */
+/* ---------- 水印 ---------- */
 .watermark {
   position: absolute;
   top: 0;
@@ -106,21 +182,49 @@
   bottom: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.08;
+  opacity: 0.06;
   background-repeat: repeat;
 }
 
-/* 移动端 */
+/* ---------- 头像颜色 ---------- */
+:host ::ng-deep .header-user .ant-avatar {
+  background: var(--color-cyan-signal) !important;
+  border-radius: 50% !important;
+}
+
+/* ---------- 移动端 ---------- */
 @media (max-width: 768px) {
   .app-header {
     padding: 0 8px;
-    .global-search { display: none; }
+
+    .global-search {
+      display: none;
+    }
   }
-  .content-inner { padding: 8px; }
+
+  .content-inner {
+    padding: 12px;
+  }
 }
 
-/* 暗黑主题 */
-:global(.dark) {
-  .app-header { background: #141414; }
-  .app-content { background: #000; }
+/* ---------- 暗黑主题 ---------- */
+:host ::ng-deep .dark .app-sider,
+:host ::ng-deep .dark .app-header {
+  background: var(--color-pure-white) !important;
+}
+
+:host ::ng-deep .dark .app-content {
+  background: var(--color-stone-canvas);
+}
+
+:host ::ng-deep .dark .logo {
+  border-bottom-color: var(--color-stone-border);
+}
+
+:host ::ng-deep .dark .app-sider {
+  border-right-color: var(--color-stone-border);
+}
+
+:host ::ng-deep .dark .app-header {
+  border-bottom-color: var(--color-stone-border);
 }

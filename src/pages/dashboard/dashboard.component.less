@@ -1,3 +1,9 @@
+/* ============================================================
+   Dashboard — Seline 设计系统
+   白色统计卡片 + 石色发丝边框 + 青色强调
+   无彩色渐变、无装饰圆
+   ============================================================ */
+
 :host {
   display: block;
 }
@@ -11,63 +17,53 @@
 
 .dashboard {
   .stat-row {
-    margin-bottom: 16px;
+    margin-bottom: 24px;
   }
 
   .chart-row {
-    margin-bottom: 16px;
+    margin-bottom: 24px;
   }
 }
 
-/* 统计卡片 */
+/* ---------- 统计卡片：白底 + 石色边框 ---------- */
 .stat-card {
-  border-radius: 12px;
-  padding: 20px 24px;
-  color: #fff;
+  border-radius: var(--radius-cards);
+  padding: 24px;
+  background: var(--color-pure-white);
+  border: 1px solid var(--color-stone-border);
+  box-shadow: var(--shadow-md);
   position: relative;
   overflow: hidden;
-  transition: transform 0.3s, box-shadow 0.3s;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
 
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  }
-
-  /* 装饰圆 */
-  &::after {
-    content: '';
-    position: absolute;
-    right: -20px;
-    top: -20px;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
-    pointer-events: none;
+    border-color: var(--color-ash-gray);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-xl);
   }
 
   .stat-card-inner {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 16px;
     position: relative;
     z-index: 1;
   }
 
   .stat-icon-wrap {
-    width: 56px;
-    height: 56px;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.2);
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-icons);
+    background: var(--color-stone-canvas);
+    border: 1px solid var(--color-stone-border);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
 
     span[nz-icon] {
-      font-size: 28px;
-      color: #fff;
+      font-size: 20px;
+      color: var(--color-ink-black);
     }
   }
 
@@ -76,54 +72,68 @@
   }
 
   .stat-title {
-    font-size: 14px;
-    opacity: 0.9;
-    margin-bottom: 4px;
+    font-size: 13px;
+    color: var(--color-warm-gray);
+    margin-bottom: 6px;
+    letter-spacing: 0.004em;
+    text-transform: uppercase;
+    font-weight: 500;
   }
 
   .stat-value {
-    font-size: 26px;
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 4px;
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--color-ink-black);
+    line-height: 1.12;
+    margin-bottom: 6px;
+    letter-spacing: -0.021em;
 
     .stat-prefix {
       font-size: 16px;
       font-weight: 400;
       margin-right: 2px;
+      color: var(--color-warm-gray);
     }
   }
 
   .stat-trend {
-    font-size: 13px;
-    opacity: 0.9;
+    font-size: 12px;
     display: flex;
     align-items: center;
     gap: 4px;
+    color: var(--color-warm-gray);
+    letter-spacing: 0.004em;
 
     span[nz-icon] {
-      font-size: 12px;
+      font-size: 11px;
+    }
+
+    &.up {
+      color: var(--color-cyan-signal);
     }
 
     &.down {
-      opacity: 0.7;
+      color: var(--color-ash-gray);
     }
   }
 }
 
-/* 图表卡片 */
+/* ---------- 图表卡片 ---------- */
 .chart-card {
-  margin-bottom: 16px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  margin-bottom: 24px;
+  border-radius: var(--radius-cards) !important;
 
   ::ng-deep .ant-card-head-title {
-    font-size: 15px;
-    font-weight: 600;
+    font-family: var(--font-display) !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    color: var(--color-ink-black) !important;
+    letter-spacing: -0.017em;
   }
 
   ::ng-deep .ant-card-body {
-    padding: 16px;
+    padding: 16px 24px 24px !important;
   }
 }
 
@@ -132,7 +142,7 @@
   width: 100%;
 }
 
-/* 响应式 */
+/* ---------- 响应式 ---------- */
 @media (max-width: 576px) {
   .chart-box {
     height: 260px;
@@ -142,16 +152,31 @@
     padding: 16px;
 
     .stat-icon-wrap {
-      width: 48px;
-      height: 48px;
+      width: 40px;
+      height: 40px;
 
       span[nz-icon] {
-        font-size: 24px;
+        font-size: 18px;
       }
     }
 
     .stat-value {
-      font-size: 22px;
+      font-size: 24px;
+    }
+  }
+}
+
+/* ---------- 暗黑主题 ---------- */
+:host ::ng-deep .dark .stat-card {
+  background: var(--color-pure-white);
+  border-color: var(--color-stone-border);
+
+  .stat-icon-wrap {
+    background: var(--color-stone-canvas);
+    border-color: var(--color-stone-border);
+
+    span[nz-icon] {
+      color: var(--color-ink-black);
     }
   }
 }

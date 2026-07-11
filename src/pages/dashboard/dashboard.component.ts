@@ -12,7 +12,6 @@ interface StatCard {
   title: string;
   value: number;
   icon: string;
-  color: string;
   trend: string;
   prefix?: string;
 }
@@ -34,6 +33,16 @@ interface DashboardStats {
   };
 }
 
+/** Seline 设计系统调色板 — 青色 + 石色中性 */
+const SELINE_COLORS = [
+  '#3ba6f1', // Cyan Signal — 主色
+  '#a8a29e', // Ash Gray
+  '#78716c', // Warm Gray
+  '#d6d3d1', // Stone Muted
+  '#c1e1f7', // Sky Wash
+  '#3398e1', // Cyan Edge
+];
+
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -53,8 +62,15 @@ export class DashboardComponent implements OnInit {
   radarOption = signal<EChartsOption | null>(null);
 
   ngOnInit(): void {
-    this.dataSvc.getDashboardStats().subscribe((stats: DashboardStats) => {
-      this.cards.set(stats.cards);
+    this.dataSvc.getDashboardStats().subscribe((stats: any) => {
+      // 去除卡片 color 属性 — 统一使用 Seline 白卡片样式
+      this.cards.set(stats.cards.map((c: any) => ({
+        title: c.title,
+        value: c.value,
+        icon: c.icon,
+        trend: c.trend,
+        prefix: c.prefix
+      })));
       this.lineOption.set(this.buildLineOption(stats.lineChart));
       this.barOption.set(this.buildBarOption(stats.barChart));
       this.pieOption.set(this.buildPieOption(stats.pieChart));
@@ -71,11 +87,19 @@ export class DashboardComponent implements OnInit {
     return {
       tooltip: {
         trigger: 'axis',
-        axisPointer: { type: 'cross' }
+        axisPointer: { type: 'cross' },
+        backgroundColor: '#0c0a09',
+        borderColor: '#0c0a09',
+        textStyle: { color: '#f5f5f4', fontSize: 12 },
+        borderRadius: 6
       },
       legend: {
         data: data.series.map(s => s.name),
-        bottom: 0
+        bottom: 0,
+        textStyle: { color: '#78716c', fontSize: 12 },
+        itemWidth: 12,
+        itemHeight: 12,
+        icon: 'circle'
       },
       grid: {
         left: '3%',
@@ -87,11 +111,19 @@ export class DashboardComponent implements OnInit {
       xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: data.months
+        data: data.months,
+        axisLine: { lineStyle: { color: '#e8e6e5' } },
+        axisLabel: { color: '#78716c', fontSize: 12 },
+        axisTick: { show: false }
       },
       yAxis: {
         type: 'value',
+        axisLine: { show: false },
+        axisTick: { show: false },
+        splitLine: { lineStyle: { color: '#e8e6e5', type: 'dashed' } },
         axisLabel: {
+          color: '#78716c',
+          fontSize: 12,
           formatter: (val: number | string) => {
             const num = Number(val);
             if (num >= 10000) {
@@ -101,13 +133,26 @@ export class DashboardComponent implements OnInit {
           }
         }
       },
-      series: data.series.map(s => ({
+      series: data.series.map((s, i) => ({
         name: s.name,
         type: 'line' as const,
         data: s.data,
         smooth: true,
-        areaStyle: { opacity: 0.15 },
-        lineStyle: { width: 3 }
+        symbol: 'circle',
+        symbolSize: 6,
+        areaStyle: {
+          opacity: i === 0 ? 0.08 : 0.04,
+          color: SELINE_COLORS[i]
+        },
+        lineStyle: {
+          width: 2,
+          color: SELINE_COLORS[i]
+        },
+        itemStyle: {
+          color: SELINE_COLORS[i],
+          borderColor: '#fff',
+          borderWidth: 2
+        }
       }))
     };
   }
@@ -116,7 +161,11 @@ export class DashboardComponent implements OnInit {
     return {
       tooltip: {
         trigger: 'axis',
-        axisPointer: { type: 'shadow' }
+        axisPointer: { type: 'shadow' },
+        backgroundColor: '#0c0a09',
+        borderColor: '#0c0a09',
+        textStyle: { color: '#f5f5f4', fontSize: 12 },
+        borderRadius: 6
       },
       grid: {
         left: '3%',
@@ -128,29 +177,30 @@ export class DashboardComponent implements OnInit {
       xAxis: {
         type: 'category',
         data: data.departments,
-        axisLabel: { interval: 0 }
+        axisLine: { lineStyle: { color: '#e8e6e5' } },
+        axisLabel: { color: '#78716c', fontSize: 12 },
+        axisTick: { show: false }
       },
       yAxis: {
-        type: 'value'
+        type: 'value',
+        axisLine: { show: false },
+        axisTick: { show: false },
+        splitLine: { lineStyle: { color: '#e8e6e5', type: 'dashed' } },
+        axisLabel: { color: '#78716c', fontSize: 12 }
       },
       series: [
         {
           name: '业绩',
           type: 'bar',
           data: data.data,
-          barWidth: '50%',
+          barWidth: '40%',
           itemStyle: {
             borderRadius: [6, 6, 0, 0],
-            color: {
-              type: 'linear',
-              x: 0,
-              y: 0,
-              x2: 0,
-              y2: 1,
-              colorStops: [
-                { offset: 0, color: '#667eea' },
-                { offset: 1, color: '#764ba2' }
-              ]
+            color: '#3ba6f1'
+          },
+          emphasis: {
+            itemStyle: {
+              color: '#5bb6f4'
             }
           }
         }
@@ -162,13 +212,22 @@ export class DashboardComponent implements OnInit {
     return {
       tooltip: {
         trigger: 'item',
-        formatter: '{a} <br/>{b}: {c} ({d}%)'
+        formatter: '{a} <br/>{b}: {c} ({d}%)',
+        backgroundColor: '#0c0a09',
+        borderColor: '#0c0a09',
+        textStyle: { color: '#f5f5f4', fontSize: 12 },
+        borderRadius: 6
       },
       legend: {
         orient: 'vertical',
         right: '5%',
-        top: 'center'
+        top: 'center',
+        textStyle: { color: '#78716c', fontSize: 12 },
+        icon: 'circle',
+        itemWidth: 8,
+        itemHeight: 8
       },
+      color: SELINE_COLORS,
       series: [
         {
           name: '业务板块',
@@ -177,7 +236,7 @@ export class DashboardComponent implements OnInit {
           center: ['40%', '50%'],
           avoidLabelOverlap: false,
           itemStyle: {
-            borderRadius: 8,
+            borderRadius: 6,
             borderColor: '#fff',
             borderWidth: 2
           },
@@ -189,7 +248,8 @@ export class DashboardComponent implements OnInit {
             label: {
               show: true,
               fontSize: 16,
-              fontWeight: 'bold'
+              fontWeight: 500,
+              color: '#0c0a09'
             }
           },
           labelLine: {
@@ -203,35 +263,41 @@ export class DashboardComponent implements OnInit {
 
   private buildRadarOption(data: DashboardStats['radarChart']): EChartsOption {
     return {
-      tooltip: {},
+      tooltip: {
+        backgroundColor: '#0c0a09',
+        borderColor: '#0c0a09',
+        textStyle: { color: '#f5f5f4', fontSize: 12 },
+        borderRadius: 6
+      },
       radar: {
         indicator: data.indicators,
         radius: '65%',
         splitNumber: 5,
         axisName: {
-          color: '#666',
+          color: '#78716c',
           fontSize: 12
         },
         splitLine: {
-          lineStyle: { color: '#e8e8e8' }
+          lineStyle: { color: '#e8e6e5' }
         },
         splitArea: {
-          areaStyle: { color: ['#fafafa', '#fff'] }
+          areaStyle: { color: ['rgba(250,250,249,0)', 'rgba(232,230,229,0.3)'] }
         },
         axisLine: {
-          lineStyle: { color: '#e8e8e8' }
+          lineStyle: { color: '#e8e6e5' }
         }
       },
       series: [
         {
           name: '指标评分',
           type: 'radar',
-          data: data.data.map(d => ({
+          data: data.data.map((d, i) => ({
             value: d.value,
-            name: d.name
-          })),
-          areaStyle: { opacity: 0.2 },
-          lineStyle: { width: 2 }
+            name: d.name,
+            areaStyle: { opacity: 0.1, color: SELINE_COLORS[i % SELINE_COLORS.length] },
+            lineStyle: { width: 2, color: SELINE_COLORS[i % SELINE_COLORS.length] },
+            itemStyle: { color: SELINE_COLORS[i % SELINE_COLORS.length] }
+          }))
         }
       ]
     };

@@ -8,7 +8,7 @@
     <nz-row [nzGutter]="[16, 16]" class="stat-row">
       @for (card of cards(); track card.title) {
         <nz-col [nzXs]="24" [nzSm]="12" [nzLg]="6">
-          <div class="stat-card" [style.background]="card.color">
+          <div class="stat-card">
             <div class="stat-card-inner">
               <div class="stat-icon-wrap">
                 <span nz-icon [nzType]="card.icon"></span>
@@ -21,7 +21,7 @@
                   }
                   {{ card.value | number }}
                 </div>
-                <div class="stat-trend" [class.down]="isDown(card.trend)">
+                <div class="stat-trend" [class.up]="!isDown(card.trend)" [class.down]="isDown(card.trend)">
                   <span nz-icon [nzType]="isDown(card.trend) ? 'arrow-down' : 'arrow-up'"></span>
                   {{ card.trend }}
                 </div>

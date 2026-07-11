@@ -1,3 +1,9 @@
+/* ============================================================
+   Login Page — Seline 设计系统
+   暖石画布背景，墨黑品牌侧，青色 CTA
+   无渐变、无装饰几何图形、纯平面编辑级
+   ============================================================ */
+
 :host {
   display: block;
 }
@@ -9,65 +15,43 @@
   justify-content: center;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #5b6ee0 100%);
+  background: var(--color-stone-canvas);
 }
 
-/* 装饰几何图形 */
-.bg-shape {
+/* 装饰：极简石色分割线，替代彩色几何 */
+.login-page::before {
+  content: '';
   position: absolute;
-  border-radius: 50%;
-  filter: blur(2px);
-  opacity: 0.15;
-  pointer-events: none;
-
-  &.shape-1 {
-    width: 400px;
-    height: 400px;
-    background: #fff;
-    top: -120px;
-    right: -80px;
-  }
-
-  &.shape-2 {
-    width: 300px;
-    height: 300px;
-    background: #00d4ff;
-    bottom: -100px;
-    left: -60px;
-    opacity: 0.2;
-  }
-
-  &.shape-3 {
-    width: 200px;
-    height: 200px;
-    background: #f093fb;
-    top: 40%;
-    left: 10%;
-    opacity: 0.12;
-  }
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-stone-border) 30%, var(--color-stone-border) 70%, transparent);
 }
 
 .login-card {
   display: flex;
-  width: 880px;
+  width: 860px;
   max-width: 92vw;
-  min-height: 520px;
-  border-radius: 16px;
+  min-height: 540px;
+  border-radius: var(--radius-feature-card);
   overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  background: #fff;
+  background: var(--color-pure-white);
+  border: 1px solid var(--color-stone-border);
+  box-shadow: var(--shadow-xl);
   z-index: 1;
 }
 
-/* 左侧品牌区 */
+/* ---------- 左侧品牌区：墨黑 Soot 底色 ---------- */
 .brand-side {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 48px 40px;
-  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-  color: #fff;
+  background: var(--color-soot);
+  color: #a8a29e;
+  position: relative;
 
   .brand-content {
     flex: 1;
@@ -77,32 +61,37 @@
   }
 
   .brand-logo {
-    width: 64px;
-    height: 64px;
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.2);
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-icons);
+    background: var(--color-cyan-signal);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 24px;
+    margin-bottom: 32px;
 
     .logo-icon {
-      font-size: 36px;
+      font-size: 26px;
+      line-height: 1;
     }
   }
 
   .brand-title {
-    font-size: 28px;
-    font-weight: 700;
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 400;
     margin: 0 0 8px;
-    color: #fff;
+    color: #f5f5f4;
+    letter-spacing: -0.025em;
+    line-height: 1.25;
   }
 
   .brand-slogan {
-    font-size: 15px;
-    opacity: 0.85;
-    margin: 0 0 40px;
-    letter-spacing: 2px;
+    font-size: 14px;
+    color: var(--color-ash-gray);
+    margin: 0 0 48px;
+    letter-spacing: 0.025em;
+    line-height: 1.64;
   }
 
   .brand-features {
@@ -115,53 +104,60 @@
       align-items: center;
       gap: 10px;
       font-size: 14px;
-      opacity: 0.9;
+      color: #a8a29e;
       margin-bottom: 16px;
+      line-height: 1.64;
 
       span[nz-icon] {
-        font-size: 18px;
-        color: #4ade80;
+        font-size: 16px;
+        color: var(--color-cyan-signal);
       }
     }
   }
 
   .brand-footer {
     font-size: 12px;
-    opacity: 0.6;
+    color: #57534e;
 
     p {
       margin: 0;
+      letter-spacing: 0.004em;
     }
   }
 }
 
-/* 右侧表单区 */
+/* ---------- 右侧表单区：纯白 ---------- */
 .form-side {
   flex: 1;
   padding: 48px 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background: var(--color-pure-white);
 
   .form-header {
     margin-bottom: 32px;
 
     h2 {
-      font-size: 24px;
-      font-weight: 600;
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 400;
       margin: 0 0 8px;
-      color: #1a1a2e;
+      color: var(--color-ink-black);
+      letter-spacing: -0.021em;
+      line-height: 1.22;
     }
 
     p {
       font-size: 14px;
-      color: #999;
+      color: var(--color-warm-gray);
       margin: 0;
+      line-height: 1.64;
     }
   }
 }
 
-/* 验证码区域 */
+/* ---------- 验证码区 ---------- */
 .captcha-row {
   display: flex;
   gap: 12px;
@@ -177,58 +173,64 @@
     height: 32px;
     line-height: 30px;
     text-align: center;
-    font-size: 18px;
-    font-weight: 700;
-    font-style: italic;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: var(--font-display);
     letter-spacing: 4px;
     cursor: pointer;
     user-select: none;
-    border: 1px solid #d9d9d9;
-    border-radius: 6px;
-    background: linear-gradient(45deg, #f0f2f5, #e6e6e6, #f0f2f5);
-    text-decoration: line-through;
-    color: #333;
-    transition: all 0.2s;
+    border: 1px solid var(--color-stone-muted);
+    border-radius: var(--radius-inputs);
+    background: var(--color-stone-canvas);
+    color: var(--color-ink-black);
+    transition: all 0.2s ease;
 
     &:hover {
-      border-color: #667eea;
-      box-shadow: 0 0 6px rgba(102, 126, 234, 0.3);
+      border-color: var(--color-cyan-signal);
+      background: rgba(59, 166, 241, 0.04);
     }
   }
 }
 
-/* 密码可见切换 */
+/* ---------- 密码可见切换 ---------- */
 .pwd-toggle {
   cursor: pointer;
-  color: #999;
-  transition: color 0.2s;
+  color: var(--color-ash-gray);
+  transition: color 0.2s ease;
 
   &:hover {
-    color: #667eea;
+    color: var(--color-cyan-signal);
   }
 }
 
-/* 登录按钮 */
+/* ---------- 登录按钮 ---------- */
 .login-btn {
-  height: 42px;
-  font-size: 16px;
+  height: 44px;
+  font-size: 15px;
   font-weight: 500;
-  letter-spacing: 4px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border: none;
+  letter-spacing: 0.025em;
+  background: var(--color-cyan-signal) !important;
+  border: 1px solid var(--color-cyan-edge) !important;
+  color: #fff !important;
 
   &:hover {
-    background: linear-gradient(135deg, #5a6fd8 0%, #6a3f92 100%);
+    background: #5bb6f4 !important;
+    border-color: var(--color-cyan-signal) !important;
+  }
+
+  &:active {
+    background: var(--color-cyan-edge) !important;
   }
 }
 
-/* 分割线 */
+/* ---------- 分割线 ---------- */
 .divider-text {
   font-size: 12px;
-  color: #bbb;
+  color: var(--color-ash-gray);
+  letter-spacing: 0.004em;
 }
 
-/* 账号提示卡片 */
+/* ---------- 账号提示卡片 ---------- */
 .account-hint {
   display: flex;
   gap: 12px;
@@ -236,43 +238,46 @@
   .hint-card {
     flex: 1;
     padding: 12px 16px;
-    border-radius: 8px;
-    background: #f6f8fa;
-    border: 1px solid #e8e8e8;
-    transition: all 0.2s;
+    border-radius: var(--radius-cards);
+    background: var(--color-stone-canvas);
+    border: 1px solid var(--color-stone-border);
+    transition: all 0.2s ease;
 
     &:hover {
-      border-color: #667eea;
-      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
+      border-color: var(--color-cyan-signal);
+      box-shadow: var(--shadow-subtle);
     }
 
     .hint-role {
       font-size: 13px;
-      font-weight: 600;
+      font-weight: 500;
       margin-bottom: 4px;
+      color: var(--color-ink-black);
 
       span[nz-icon] {
         margin-right: 4px;
+        color: var(--color-cyan-signal);
       }
     }
 
     .hint-cred {
       font-size: 12px;
-      color: #666;
-      font-family: 'Courier New', monospace;
+      color: var(--color-warm-gray);
+      font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+      letter-spacing: 0.004em;
     }
 
-    &.admin .hint-role {
-      color: #722ed1;
+    &.admin .hint-role span[nz-icon] {
+      color: var(--color-cyan-signal);
     }
 
-    &.employee .hint-role {
-      color: #1890ff;
+    &.employee .hint-role span[nz-icon] {
+      color: var(--color-ash-gray);
     }
   }
 }
 
-/* 移动端自适应：隐藏品牌区 */
+/* ---------- 移动端 ---------- */
 @media (max-width: 768px) {
   .login-card {
     width: 92vw;
@@ -290,4 +295,29 @@
   .account-hint {
     flex-direction: column;
   }
+}
+
+/* ---------- 暗黑主题 ---------- */
+:host ::ng-deep .dark .login-page {
+  background: var(--color-stone-canvas);
+}
+
+:host ::ng-deep .dark .login-card {
+  background: var(--color-pure-white);
+  border-color: var(--color-stone-border);
+}
+
+:host ::ng-deep .dark .form-side {
+  background: var(--color-pure-white);
+}
+
+:host ::ng-deep .dark .captcha-box {
+  background: var(--color-stone-canvas);
+  border-color: var(--color-stone-muted);
+  color: var(--color-ink-black);
+}
+
+:host ::ng-deep .dark .account-hint .hint-card {
+  background: var(--color-stone-canvas);
+  border-color: var(--color-stone-border);
 }
