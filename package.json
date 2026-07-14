@@ -6,7 +6,9 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --base-href=\"./\"",
-    "watch": "ng build --watch --configuration development"
+    "watch": "ng build --watch --configuration development",
+    "deploy": "npm run build && wrangler deploy",
+    "preview": "npm run build && wrangler dev"
   },
   "private": true,
   "dependencies": {
@@ -34,6 +36,7 @@
     "@angular/cli": "^19.2.27",
     "@angular/compiler-cli": "^19.2.25",
     "@types/file-saver": "^2.0.7",
-    "typescript": "~5.5.2"
+    "typescript": "~5.5.2",
+    "wrangler": "^4.110.0"
   }
 }
